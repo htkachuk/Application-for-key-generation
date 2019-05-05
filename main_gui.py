@@ -11,7 +11,8 @@ get_function = {
 			"RC2":keys.rc2(),
 			"RC5":keys.rc5(),
 			"Twofish":keys.twofish(),
-			"IDEA":keys.idea()
+			"IDEA":keys.idea(),
+			"GOST28147":keys.gost28147()
 			}
 
 def get(btn):
@@ -37,6 +38,8 @@ def get(btn):
 		key, time = keys.twofish()
 	elif algorythm == "RC5":
 		key, time = keys.rc5()
+	elif algorythm == "GOST28147":
+		key, time = keys.gost28147()
 
 	message = "Key from algorythm:\n" + key + "\nDo you want to save it?"
 	if key != 0:
@@ -60,7 +63,7 @@ def info(btn):
 with gui("Simple application for key generation", "800x500", font={'size':20, 'family':"Courier"}, bg="gray")as app:
 	app.label("Welcome to the key generation app\nChoose an algorythm for key generation:")
 	app.addLabelOptionBox("algorythm", ["DES", "Blowfish", "Twofish", "AES128", "AES192",
-                        "AES256", "CAST", "RC2", "RC5", "IDEA"])
+                        "AES256", "CAST", "RC2", "RC5", "IDEA", "GOST28147"])
 	app.addButton("GET", get)
 	app.addButton("Information about all algorythm", info)
 

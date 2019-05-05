@@ -8,6 +8,7 @@ MEDIUM_KEYLEN = 24
 LARGE_KEYLEN = 32
 LARGE_TIME = '%m%d%H%M%S%f'
 LARGE_STATE = 16
+# GOST_STATE = 32
 BLOWFISH_KEYLEN = 32
 BLOWFISH_TIME = '%S%f'
 BLOWFISH_STATE = 8
@@ -108,7 +109,13 @@ class Cli(cmd.Cmd):
 	def do_idea(self, args):
 		obj = ag.ANSIX917(SHORT_KEYLEN, LARGE_TIME, SHORT_STATE, 'IDEA')
 		key, time = obj.__next__()
-		print("Key with idea algorithm: ", key)
+		print("Key with IDEA algorithm: ", key)
+		print("Time for generation: ", time, "ms")	
+
+	def do_gost28147(self, args):
+		obj = ag.ANSIX917(LARGE_KEYLEN, LARGE_TIME, LARGE_STATE, 'GOST28147')
+		key, time = obj.__next__()
+		print("Key with GOST28147 algorithm: ", key)
 		print("Time for generation: ", time, "ms")	
 
 	def do_exit(self, args):
