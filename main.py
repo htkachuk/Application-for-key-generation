@@ -7,15 +7,12 @@ SHORT_STATE = 8
 MEDIUM_KEYLEN = 24
 LARGE_KEYLEN = 32
 LARGE_TIME = '%m%d%H%M%S%f'
-LAGRGE_STATE = 16
+LARGE_STATE = 16
 BLOWFISH_KEYLEN = 32
 BLOWFISH_TIME = '%S%f'
 BLOWFISH_STATE = 8
 
-#twofish
-#idea
 #gost28147
-#rc5
 
 
 class Cli(cmd.Cmd):
@@ -97,10 +94,22 @@ class Cli(cmd.Cmd):
 		print("Time for generation: ", time, "ms")
 
 	def do_twofish(self, args):
-		obj = ag.ANSIX917(LARGE_KEYLEN, LARGE_TIME, SHORT_STATE, 'Twofish')
+		obj = ag.ANSIX917(LARGE_KEYLEN, LARGE_TIME, LARGE_STATE, 'Twofish')
 		key, time = obj.__next__()
-		print("Key with Blowfish algorithm: ", key)
-		print("Time for generation: ", time, "ms")		
+		print("Key with Twofish algorithm: ", key)
+		print("Time for generation: ", time, "ms")
+
+	def do_rc5(self, args):
+		obj = ag.ANSIX917(SHORT_KEYLEN, LARGE_TIME, LARGE_STATE, 'RC5')
+		key, time = obj.__next__()
+		print("Key with RC5 algorithm: ", key)
+		print("Time for generation: ", time, "ms")	
+
+	def do_idea(self, args):
+		obj = ag.ANSIX917(SHORT_KEYLEN, LARGE_TIME, SHORT_STATE, 'IDEA')
+		key, time = obj.__next__()
+		print("Key with idea algorithm: ", key)
+		print("Time for generation: ", time, "ms")	
 
 	def do_exit(self, args):
 		"""command for exit of CMD CLI"""

@@ -5,6 +5,11 @@ from Crypto.Util.strxor import strxor
 import time
 from twofish import Twofish
 import binascii
+from rc5 import RC5
+from idea import IDEA
+
+ROUNDS = 18
+BLOCKSIZE = 32
 
 class ANSIX917:
     '''
@@ -28,7 +33,11 @@ class ANSIX917:
         if algorythm == 'Twofish':
             self.cipher = Twofish(key)
         if algorythm == "RC2":
-            self.cipher = ARC2.new(key, ARC2.MODE_CFB, IV)
+            self.cipher = ARC2.new(key, ARC2.MODE_CBC, IV)
+        if algorythm == "IDEA":
+            self.cipher = IDEA(key)
+        if algorythm == "RC5":
+            self.cipher = RC5(key, BLOCKSIZE, ROUNDS)
 
     def __iter__(self):
         return self
@@ -36,7 +45,7 @@ class ANSIX917:
     def __next__(self):
         start = int(datetime.now().strftime('%f'))
         ts = datetime.now().strftime(self.__time_format)
-        T = self.cipher.encrypt(ts)
+        T = self.cipher.encrypt(bytes(ts, 'utf-8'))
         out = self.cipher.encrypt(strxor(T, self.__state))
         self.__state = self.cipher.encrypt(strxor(T, out))
         return out.hex(), (int(datetime.now().strftime('%f'))- start)

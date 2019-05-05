@@ -33,9 +33,17 @@ def blowfish():
 	return obj.__next__()
 
 def twofish():
-	obj = ag.ANSIX917(LARGE_KEYLEN, LARGE_TIME, SHORT_STATE, 'Twofish')
+	obj = ag.ANSIX917(LARGE_KEYLEN, LARGE_TIME, LARGE_STATE, 'Twofish')
 	return obj.__next__()
 	
 def rc2():
 	obj = ag.ANSIX917(SHORT_KEYLEN, SHORT_TIME, SHORT_STATE, 'RC2')
+	return obj.__next__()
+
+def rc5():
+	obj = ag.ANSIX917(SHORT_KEYLEN, LARGE_TIME, LARGE_STATE, 'RC5')
+	return obj.__next__()
+
+def idea():
+	obj = ag.ANSIX917(SHORT_KEYLEN, LARGE_TIME, SHORT_STATE, 'IDEA')
 	return obj.__next__()
